@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Heart Disease Web Application</title>
+  </head>
+<body>
+<h1>Diagnoses</h1>
+{% block content %}
+<div class="card card-accent-danger mb-3" style="width: 70%; padding: 2%; margin-left: auto; margin-right: auto;">
+  <form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    {% load widget_tweaks %}
+
+    <div class="form-group">
+        <label>How old are you?</label>
+        {% render_field form.age_v class="form-control" placeholder="Maximum age: 90" %}
+      </div>
+
+    <div class="form-group">
+        <label>Male or female?</label>
+        {% render_field form.sex_v class="form-control" placeholder="Male = 0, Female = 1" %}
+    </div>
+
+    <div class="form-group">
+        <label>What type of chest pain do you have?</label>
+        {% render_field form.cp_v class="form-control" placeholder="0: Typical Angina;  1: Atypical Angina; 2: Non-anginal pain; 3: Asymptomatic" %}
+      </div>
+
+    <div class="form-group">
+        <label>What is your recorded maximum heart rate?</label>
+        {% render_field form.thalach_v class="form-control" placeholder="maximum value" %}
+      </div>
+
+    <div class="form-group">
+        <label>Do you have induced angina?</label>
+        {% render_field form.exang_v class="form-control" placeholder="1: Yes; 0: No" %}
+    </div>
+
+    <div class="form-group">
+      <label>What is your ST depression induced by exercise relative to rest?</label>
+      {% render_field form.oldpeak_v class="form-control" placeholder="Induced value" %}
+    </div>
+
+    <div class="form-group">
+      <label>What is your slope of the peak exercise?</label>
+      {% render_field form.slope_v class="form-control" placeholder="0: Upsloping; 1: Flat; 2: Downsloping" %}
+    </div>
+
+    <div class="form-group">
+        <label>What is the number of major blood vessels?</label>
+        {% render_field form.ca_v class="form-control" placeholder="0: No major arteries; 1: Only one major artery; 2: Two major arteries; 3: Three major arteries" %}
+      </div>
+
+    <button type="submit" class="btn btn-warning">Click to diagnose!</button>
+  </form>
+  {%if prediction %}
+  <p> Patient is: {{prediction}}</p>
+  {%endif%}
+</div>
+{% endblock %}
+
+</body>
+</html>
